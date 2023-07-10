@@ -1,5 +1,0 @@
-spring:
-  datasource:
-    username: root
-    password: password
-    url: jdbc:mariadb://insaneduck-pi.local:33060/data
