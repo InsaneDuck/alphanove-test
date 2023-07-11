@@ -2,6 +2,7 @@ package dev.insaneduck.alphanovetest.batch;
 
 
 import dev.insaneduck.alphanovetest.entites.StringResponse;
+import dev.insaneduck.alphanovetest.exception.BatchTriggerFailedException;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -41,16 +42,14 @@ public class BatchController {
                     .toJobParameters();
 
             JobExecution jobExecution = jobLauncher.run(job, jobParameters);
-//            if (jobExecution.getExitStatus().getExitCode().equals(ExitStatus.COMPLETED)) {
-//                Files.deleteIfExists(Paths.get(CACHE + fileName));
-//            }
             return new StringResponse("Batch job completed successfully!");
         } catch (JobExecutionAlreadyRunningException |
                  JobRestartException |
                  JobInstanceAlreadyCompleteException |
                  JobParametersInvalidException |
                  IOException e) {
-            return new StringResponse("Error triggering batch job: " + e.getMessage());
+            throw new BatchTriggerFailedException("Error triggering batch job: " + e.getMessage());
+            //return new StringResponse("Error triggering batch job: " + e.getMessage());
         }
     }
 }

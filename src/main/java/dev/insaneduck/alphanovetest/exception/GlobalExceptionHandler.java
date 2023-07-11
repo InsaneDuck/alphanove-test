@@ -1,8 +1,6 @@
 package dev.insaneduck.alphanovetest.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -26,6 +24,15 @@ public class GlobalExceptionHandler {
             MethodArgumentTypeMismatchException e) {
         return ErrorResponse.builder()
                 .httpStatus(HttpStatus.BAD_REQUEST)
+                .errorMessage(e.getMessage()).build();
+    }
+
+    @ExceptionHandler(BatchTriggerFailedException.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleBatchTriggerFailedException(BatchTriggerFailedException e)
+    {
+        return ErrorResponse.builder()
+                .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
                 .errorMessage(e.getMessage()).build();
     }
 }
