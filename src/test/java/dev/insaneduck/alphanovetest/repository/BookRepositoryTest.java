@@ -57,19 +57,32 @@ class BookRepositoryTest {
     @Test
     @Rollback(value = true)
     void update(){
-        Book book = bookRepository.findById(20).get();
-        book.setTitle("Test");
-        Book book1 = bookRepository.save(book);
-        assertThat(book1.getTitle()).isEqualTo("Test");
+        Optional<Book> optionalBook = bookRepository.findById(20);
+        Book book = optionalBook.orElse(null);
+        if(book!=null)
+        {
+            book.setTitle("Test");
+            Book book1 = bookRepository.save(book);
+            assertThat(book1.getTitle()).isEqualTo("Test");
+        }
+        else {
+            fail();
+        }
     }
 
     @Test
     @Rollback
     void delete(){
-        Book book = bookRepository.findById(1).get();
-
-        bookRepository.delete(book);
-
+        Optional<Book> optionalBook = bookRepository.findById(1);
+        Book book = optionalBook.orElse(null);
+        if(book!=null)
+        {
+            bookRepository.delete(book);
+            //todo
+        }
+        else {
+            fail();
+        }
     }
 
 }
