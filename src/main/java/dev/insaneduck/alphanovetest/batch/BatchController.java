@@ -48,8 +48,8 @@ public class BatchController {
                  JobInstanceAlreadyCompleteException |
                  JobParametersInvalidException |
                  IOException e) {
-            throw new BatchTriggerFailedException("Error triggering batch job: " + e.getMessage());
-            //return new StringResponse("Error triggering batch job: " + e.getMessage());
+            //throw new BatchTriggerFailedException("Error triggering batch job: " + e.getMessage());
+            return new StringResponse("Error triggering batch job: " + e.getMessage());
         }
     }
 }

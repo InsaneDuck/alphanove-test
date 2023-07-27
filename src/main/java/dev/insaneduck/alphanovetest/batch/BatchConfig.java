@@ -5,6 +5,7 @@ import dev.insaneduck.alphanovetest.entites.Employee;
 import dev.insaneduck.alphanovetest.repository.EmployeeRepository;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
@@ -27,6 +28,7 @@ import javax.sql.DataSource;
 import java.io.File;
 
 @Configuration
+@EnableBatchProcessing
 public class BatchConfig {
 
     private final EmployeeRepository employeeRepository;

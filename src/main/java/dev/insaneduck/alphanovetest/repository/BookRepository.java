@@ -1,6 +1,7 @@
 package dev.insaneduck.alphanovetest.repository;
 
 import dev.insaneduck.alphanovetest.entites.Book;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,6 +14,8 @@ import java.util.Optional;
 public interface BookRepository extends JpaRepository<Book,Integer> {
     @Query(nativeQuery = false, value = "select b from Book b where b.title=:title")
     Optional<List<Book>> findBooksByTitle(@Param("title") String title);
+    @Query(value = "select b from Book b where b.id =:id and b.title=:title")
+    Optional<List<Book>> findBooksByAvailabilityAndId(@Param("id")Integer id, @Param("title") String title);
     @Query(nativeQuery = false, value = "select b from Book b where b.title like %:title% and b.series like %:series%")
     Optional<List<Book>> findBooksByTitleAndSeries(@Param("title") String title, @Param("series") String series);
     @Query(nativeQuery = false, value = "select b from Book b where b.title like %:title and b.edition=:edition")
